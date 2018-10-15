@@ -1,7 +1,8 @@
-package com.quibotic.training.movie.movie.dto;
+package com.quibotic.training.movie.movie.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.quibotic.training.movie.movie.models.Movie;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.OnDelete;

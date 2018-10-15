@@ -1,7 +1,6 @@
 package com.quibotic.training.movie.movie.Repositories;
 
-import com.quibotic.training.movie.movie.dto.Comment;
-import com.quibotic.training.movie.movie.dto.Movie;
+import com.quibotic.training.movie.movie.models.Comment;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;

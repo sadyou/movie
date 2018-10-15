@@ -1,8 +1,10 @@
-package com.quibotic.training.movie.movie.dto;
+package com.quibotic.training.movie.movie.models;
 
 import lombok.*;
+import org.springframework.hateoas.ResourceSupport;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.List;
 
 @Entity
@@ -18,5 +20,8 @@ public class Movie {
     private int id;
     private String title;
     private int year;
+
+    @OneToMany(mappedBy = "movie")
+    private List<OnTheater> onTheaters;
 //    List<Comment> comments;
 }

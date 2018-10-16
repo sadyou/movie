@@ -7,3 +7,6 @@ insert into Comment values(1, 'Sadegh', CURRENT_TIMESTAMP, 'Perfect!!!!!', CURRE
 insert into On_Theater values(1, 2112, 'NSW', 'Event Cinemas', 1);
 insert into On_Theater values(2, 2138, 'NSW', 'Reading Cinemas', 1);
 insert into On_Theater values(3, 2000, 'NSW', 'Reading Cinemas', 2);
+
+
+insert into User values('sadegh@qubotic.com', 'Sadegh', 'Yousefi', '123456');

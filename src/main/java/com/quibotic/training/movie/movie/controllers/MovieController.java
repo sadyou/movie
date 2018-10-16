@@ -5,6 +5,8 @@ import com.quibotic.training.movie.movie.dto.MovieDto;
 import com.quibotic.training.movie.movie.exceptions.MovieNotFoundException;
 import com.quibotic.training.movie.movie.services.MovieService;
 import com.quibotic.training.movie.movie.services.MovieServiceImpl;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.Link;
 import org.springframework.hateoas.Resources;
@@ -18,12 +20,15 @@ import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 
 @RestController
 @RequestMapping("/movie")
-public class MovieController {
+public class MovieController extends BaseController {
 
     @Autowired
     private MovieService movieService;
 
 
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "Authorization", required = true, paramType = "header")
+    })
     @GetMapping
     public Resources<MovieDto> getMovies() throws MovieNotFoundException {
         List<MovieDto> movieList = movieService.findAll();
@@ -39,6 +44,9 @@ public class MovieController {
         return result;
     }
 
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "Authorization", required = true, paramType = "header")
+    })
     @GetMapping("/OnTheater")
     public Resources<MovieDto> getMoviesOnTheater() throws MovieNotFoundException {
         List<MovieDto> movieList = movieService.findOnTheaters();
@@ -54,6 +62,9 @@ public class MovieController {
         return result;
     }
 
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "Authorization", required = true, paramType = "header")
+    })
     @GetMapping("/OnTheater/{postCode}")
     public Resources<MovieDto> getMoviesOnTheaterByPostCode(@PathVariable int postCode) throws MovieNotFoundException {
         List<MovieDto> movieList = movieService.findOnTheatersByPostCode(postCode);
@@ -69,6 +80,9 @@ public class MovieController {
         return result;
     }
 
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "Authorization", required = true, paramType = "header")
+    })
     @GetMapping ("/{id}")
     public MovieDto getMovie(@PathVariable int id) throws MovieNotFoundException {
         MovieDto movieDto = movieService.findById(id);

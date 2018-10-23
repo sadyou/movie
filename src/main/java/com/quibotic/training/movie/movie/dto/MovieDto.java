@@ -16,7 +16,7 @@ import java.util.List;
 @AllArgsConstructor
 public class MovieDto extends ResourceSupport implements Serializable {
 
-    private int movieId;
+    private Integer movieId;
     @NonNull
     private String title;
     private int year;

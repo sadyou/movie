@@ -2,7 +2,9 @@ package com.quibotic.training.movie.movie.controllers;
 
 import com.quibotic.training.movie.movie.Repositories.MovieRepository;
 import com.quibotic.training.movie.movie.dto.MovieDto;
+import com.quibotic.training.movie.movie.exceptions.CommentNotFoundException;
 import com.quibotic.training.movie.movie.exceptions.MovieNotFoundException;
+import com.quibotic.training.movie.movie.models.Movie;
 import com.quibotic.training.movie.movie.services.MovieService;
 import com.quibotic.training.movie.movie.services.MovieServiceImpl;
 import io.swagger.annotations.ApiImplicitParam;
@@ -10,6 +12,7 @@ import io.swagger.annotations.ApiImplicitParams;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.Link;
 import org.springframework.hateoas.Resources;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -47,6 +50,20 @@ public class MovieController extends BaseController {
     @ApiImplicitParams({
             @ApiImplicitParam(name = "Authorization", required = true, paramType = "header")
     })
+    @PostMapping
+    public MovieDto saveMovie(@RequestBody MovieDto movie) throws MovieNotFoundException, CloneNotSupportedException {
+        MovieDto movieDto = movieService.save(movie);
+
+        Link link = linkTo(MovieController.class).slash(movieDto.getMovieId()).withSelfRel();
+        movieDto.add(link);
+
+
+        return movieDto;
+    }
+
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "Authorization", required = true, paramType = "header")
+    })
     @GetMapping("/OnTheater")
     public Resources<MovieDto> getMoviesOnTheater() throws MovieNotFoundException {
         List<MovieDto> movieList = movieService.findOnTheaters();
@@ -79,6 +96,27 @@ public class MovieController extends BaseController {
 
         return result;
     }
+
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "Authorization", required = true, paramType = "header"),
+    })
+    @DeleteMapping("/{movieId}/OnTheater")
+    @ResponseStatus(value = HttpStatus.NO_CONTENT)
+    public void deleteOnTheatersByMovieId(@PathVariable("movieId") Integer movieId) throws CommentNotFoundException {
+        movieService.deleteOnTheaterByMovieId(movieId);
+
+    }
+
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "Authorization", required = true, paramType = "header"),
+    })
+    @DeleteMapping("/OnTheater/{id}")
+    @ResponseStatus(value = HttpStatus.NO_CONTENT)
+    public void deleteOnTheaterById(@PathVariable("id") Integer id) throws CommentNotFoundException {
+        movieService.deleteOnTheaterById(id);
+
+    }
+
 
     @ApiImplicitParams({
             @ApiImplicitParam(name = "Authorization", required = true, paramType = "header")

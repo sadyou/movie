@@ -5,6 +5,7 @@ import com.quibotic.training.movie.movie.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -14,6 +15,8 @@ public class BaseController {
 
     @Autowired
     private UserService userService;
+
+
 
     @ModelAttribute
     public void getHeaders (@RequestHeader(value = "Authorization", required = true) String token){

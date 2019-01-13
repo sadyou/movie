@@ -1,0 +1,303 @@
+{
+	"info": {
+		"_postman_id": "f585941c-028f-483b-8ad5-18d5ae189ef4",
+		"name": "iteration-one-using-constants",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "create-user",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "0eca3457-e84e-456b-9b81-a8c6c5db7fce",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "ac9ed4da-9a1b-46c7-ba67-e19024357960",
+						"exec": [
+							"pm.test(\"Verify Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"var jsonData = pm.response.json();",
+							"pm.test(\"Verify firstname in response\", function () {",
+							"    var fname_rest = jsonData.firstName;",
+							"    pm.expect(fname_rest).to.eql(\"Peter\");",
+							"});",
+							"",
+							"pm.test(\"Verify lastname in response\", function () {",
+							"    ",
+							"    pm.expect(jsonData.lastName).to.eql(\"Parker\");",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"firstName\": \"Peter\",\r\n  \"lastName\": \"Parker\",\r\n  \"password\": \"mjane\",\r\n  \"username\": \"pparker@spidey.com\"\r\n}"
+				},
+				"url": {
+					"raw": "{{host}}/trainingapp/user",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"trainingapp",
+						"user"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "user-login",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "75f22395-cbc8-4ce7-acfe-14c3c36613a1",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "2f8c652e-7951-45b5-855b-0259755c5bb1",
+						"exec": [
+							"var jsonData = pm.response.json();",
+							"",
+							"",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Verify Token is not empty\", function () {",
+							"    var token = jsonData.token;",
+							"    result= (!token || token.length === 0) ;",
+							"    pm.expect(result).to.eql(false)",
+							"    ",
+							"});",
+							"",
+							"pm.test(\"Verify user details\", function () {",
+							"    var username_res  = jsonData.user.username;",
+							"    var firstname_res = jsonData.user.firstName;",
+							"    var lastname_res  = jsonData.user.lastName;",
+							"    result= (username_res === \"pparker\") && (firstname_res === \"Peter\") && (lastname_res === \"Parker\") ;",
+							"    ",
+							"    pm.expect(result).to.eql(true);",
+							"    ",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"password\": \"mjane\",\r\n  \"username\": \"pparker@spidey.com\"\r\n}"
+				},
+				"url": {
+					"raw": "{{host}}/trainingapp/user/login",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"trainingapp",
+						"user",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "save-movie-thor",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "775daf4d-6c13-4b14-a42f-029a451d4131",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "eyJleHBpcmVUaW1lIjoxNTQ3Mzg0NDI2MTY0LCJ1c2VyIjp7InVzZXJuYW1lIjoicHBhcmtlckBzcGlkZXkuY29tIiwiZmlyc3ROYW1lIjoiUGV0ZXIiLCJsYXN0TmFtZSI6IlBhcmtlciIsImxpbmtzIjpbXX19",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \r\n  \"movieId\": 8,\r\n  \"onTheaters\": [\r\n    {\r\n      \"postCode\": 2153,\r\n      \"state\": \"NSW\",\r\n      \"theaterName\": \"Event\"\r\n    },\r\n    {\r\n      \"postCode\": 2632,\r\n      \"state\": \"NSW\",\r\n      \"theaterName\": \"Hoyts\"\r\n    }\r\n  ],\r\n  \"title\": \"Mission Impossible Force\",\r\n  \"year\": 2019\r\n}"
+				},
+				"url": {
+					"raw": "{{host}}/trainingapp/movie",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"trainingapp",
+						"movie"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "save-movie-venom",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "775daf4d-6c13-4b14-a42f-029a451d4131",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "eyJleHBpcmVUaW1lIjoxNTQ3Mzg0NDI2MTY0LCJ1c2VyIjp7InVzZXJuYW1lIjoicHBhcmtlckBzcGlkZXkuY29tIiwiZmlyc3ROYW1lIjoiUGV0ZXIiLCJsYXN0TmFtZSI6IlBhcmtlciIsImxpbmtzIjpbXX19"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \r\n  \"movieId\": 9,\r\n  \"onTheaters\": [\r\n    {\r\n      \"postCode\": 2153,\r\n      \"state\": \"NSW\",\r\n      \"theaterName\": \"Hoyts\"\r\n    }\r\n  ],\r\n  \"title\": \"Iron Man\",\r\n  \"year\": 2019\r\n}"
+				},
+				"url": {
+					"raw": "{{host}}/trainingapp/movie",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"trainingapp",
+						"movie"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get-movies-by-movieId",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "eyJleHBpcmVUaW1lIjoxNTQ3Mzg0NDI2MTY0LCJ1c2VyIjp7InVzZXJuYW1lIjoicHBhcmtlckBzcGlkZXkuY29tIiwiZmlyc3ROYW1lIjoiUGV0ZXIiLCJsYXN0TmFtZSI6IlBhcmtlciIsImxpbmtzIjpbXX19",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{host}}/trainingapp/movie/8",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"trainingapp",
+						"movie",
+						"8"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get-movies-all",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "eyJleHBpcmVUaW1lIjoxNTQ3Mzg0NDI2MTY0LCJ1c2VyIjp7InVzZXJuYW1lIjoicHBhcmtlckBzcGlkZXkuY29tIiwiZmlyc3ROYW1lIjoiUGV0ZXIiLCJsYXN0TmFtZSI6IlBhcmtlciIsImxpbmtzIjpbXX19",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{host}}/trainingapp/movie",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"trainingapp",
+						"movie"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

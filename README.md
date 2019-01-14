@@ -1,8 +1,8 @@
 # movie
 
-`Linux`
+**Linux**
 `./mvnw clean package`
-`Windows`
+**Windows**
 `mvnw.cmd clean package`
 
 `mvnw spring-boot:run`

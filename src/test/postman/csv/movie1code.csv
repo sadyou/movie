@@ -1,0 +1,8 @@
+USERNAME,PASSWORD,MOVIEID,POSTCODE1,STATE1,CINEMA1,TITLE,YEAR
+peter.parker@spidersense.com,mjane,1,2000,NSW,Hoyts,Spiderman Homecoming,2018
+tony.stark@starkcorp.com,ppotts,2,1832,QLD,Hoyts,Avengers - Infinity War,2018
+peter.parker@spidersense.com,mjane,3,2154,SA,Alpha,Aquaman,2019
+tony.stark@starkcorp.com,ppotts,4,2153,TAS,IMAX,A Few Good Men,2002
+peter.parker@spidersense.com,mjane,5,2011,VIC,Grand Cinemas,Thor,2016
+tony.stark@starkcorp.com,ppotts,6,2002,WA,Event Cinemas,Captain America,2015
+peter.parker@spidersense.com,mjane,7,2012,NT,Event Cinemas,Real Steal,2010

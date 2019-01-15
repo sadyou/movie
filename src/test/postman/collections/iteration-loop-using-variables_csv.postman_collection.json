@@ -1,0 +1,461 @@
+{
+	"info": {
+		"_postman_id": "6b3efda8-796e-4211-b395-85a95f0433b4",
+		"name": "iteration-loop-using-variables_csv",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "1-create-users_csv",
+			"item": [
+				{
+					"name": "create-user Copy",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "0eca3457-e84e-456b-9b81-a8c6c5db7fce",
+								"exec": [
+									"pm.globals.set(\"username\", data.EMAIL);",
+									"pm.globals.set(\"password\", data.PASSWORD); ",
+									"pm.globals.set(\"firstName\", data.FIRSTNAME);",
+									"pm.globals.set(\"lastName\", data.LASTNAME);"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "ac9ed4da-9a1b-46c7-ba67-e19024357960",
+								"exec": [
+									"pm.test(\"Verify Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"var jsonData = pm.response.json();",
+									"var fname_rest = null;",
+									"var lname_rest = null;",
+									"pm.test(\"Verify firstname in response\", function () {",
+									"    fname_rest = jsonData.firstName;",
+									"    var fname_reqt = pm.globals.get(\"firstName\");",
+									"    pm.expect(fname_rest).to.eql(fname_reqt);",
+									"});",
+									"",
+									"pm.test(\"Verify lastname in response\", function () {",
+									"    lname_rest = jsonData.lastName;",
+									"    var lname_reqt = pm.globals.get(\"lastName\");",
+									"    pm.expect(lname_rest).to.eql(lname_reqt);",
+									"});",
+									"console.log(\"INF: First Name = \"+fname_rest+\" | Last Name = \"+lname_rest);",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"firstName\": \"{{firstName}}\",\r\n  \"lastName\": \"{{lastName}}\",\r\n  \"password\": \"{{password}}\",\r\n  \"username\": \"{{username}}\"\r\n}"
+						},
+						"url": {
+							"raw": "{{host}}/trainingapp/user",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"trainingapp",
+								"user"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "2-save-movies-two-postcodes_csv",
+			"item": [
+				{
+					"name": "user-login Copy",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "75f22395-cbc8-4ce7-acfe-14c3c36613a1",
+								"exec": [
+									"var username = pm.globals.get(\"username\");",
+									"var password = pm.globals.get(\"password\");"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "2f8c652e-7951-45b5-855b-0259755c5bb1",
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"",
+									"",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Verify Token is not empty\", function () {",
+									"    var token = jsonData.token;",
+									"    result= (!token || token.length === 0) ;",
+									"    if (!result) {",
+									"        console.log(\"INF: token is set\")",
+									"        pm.globals.set(\"auth_token\", token);",
+									"        console.log(\"TOKEN SET=> \"+token);",
+									"    } else {",
+									"        console.log(\"INF: token is not set\");",
+									"    }",
+									"      ",
+									"  ",
+									"    pm.expect(result).to.eql(false)",
+									"    ",
+									"});",
+									"",
+									"pm.test(\"Verify user details\", function () {",
+									"    var username_res  = jsonData.user.username;",
+									"    var firstname_res = jsonData.user.firstName;",
+									"    var lastname_res  = jsonData.user.lastName;",
+									"    ",
+									"    var uname = pm.globals.get(\"username\");",
+									"    var fname = pm.globals.get(\"firstName\");",
+									"    var lname = pm.globals.get(\"lastName\");",
+									"    ",
+									"    result= (username_res === uname) && (firstname_res === fname) && (lastname_res === lname) ;",
+									"    ",
+									"    pm.expect(result).to.eql(true);",
+									"    ",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"password\": \"{{password}}\",\r\n  \"username\": \"{{username}}\"\r\n}"
+						},
+						"url": {
+							"raw": "{{host}}/trainingapp/user/login",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"trainingapp",
+								"user",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "save-movie Copy",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "775daf4d-6c13-4b14-a42f-029a451d4131",
+								"exec": [
+									"pm.globals.set(\"movieId\", data.MOVIEID);",
+									"pm.globals.set(\"postCode1\", data.POSTCODE1);",
+									"pm.globals.set(\"state1\",data.STATE1);",
+									"pm.globals.set(\"theaterName1\",data.CINEMA1);",
+									"pm.globals.set(\"postCode2\", data.POSTCODE2);",
+									"pm.globals.set(\"state2\",data.STATE2);",
+									"pm.globals.set(\"theaterName2\",data.CINEMA2);",
+									"pm.globals.set(\"title\",data.TITLE);",
+									"pm.globals.set(\"year\",data.YEAR);",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "6d9ace36-3ad9-4c64-bf8f-f8a1ab3635f6",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									" var jsonData = pm.response.json();",
+									" var movieId = jsonData.movieId;",
+									" var title   = jsonData.title;",
+									" var year    = jsonData.year;",
+									" ",
+									" console.log(\"INF: Movie Id = \"+movieId+\" | Title = \"+title+\" | Year = \"+year);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{auth_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \r\n  \"movieId\": {{movieId}},\r\n  \"onTheaters\": [\r\n    {\r\n      \"postCode\": {{postCode1}},\r\n      \"state\": \"{{state1}}\",\r\n      \"theaterName\": \"{{theaterName1}}\"\r\n    },\r\n    {\r\n      \"postCode\": {{postCode2}},\r\n      \"state\": \"{{state2}}\",\r\n      \"theaterName\": \"{{theaterName2}}\"\r\n    }\r\n  ],\r\n  \"title\": \"{{title}}\",\r\n  \"year\": {{year}}\r\n}"
+						},
+						"url": {
+							"raw": "{{host}}/trainingapp/movie",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"trainingapp",
+								"movie"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "3-save-movies-one-postcodes_csv",
+			"item": [
+				{
+					"name": "user-login Copy",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "75f22395-cbc8-4ce7-acfe-14c3c36613a1",
+								"exec": [
+									"var username = pm.globals.get(\"username\");",
+									"var password = pm.globals.get(\"password\");"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "2f8c652e-7951-45b5-855b-0259755c5bb1",
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"",
+									"",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Verify Token is not empty\", function () {",
+									"    var token = jsonData.token;",
+									"    result= (!token || token.length === 0) ;",
+									"    if (!result) {",
+									"        console.log(\"INF: token is set\")",
+									"        pm.globals.set(\"auth_token\", token);",
+									"        console.log(\"TOKEN SET=> \"+token);",
+									"    } else {",
+									"        console.log(\"INF: token is not set\");",
+									"    }",
+									"      ",
+									"  ",
+									"    pm.expect(result).to.eql(false)",
+									"    ",
+									"});",
+									"",
+									"pm.test(\"Verify user details\", function () {",
+									"    var username_res  = jsonData.user.username;",
+									"    var firstname_res = jsonData.user.firstName;",
+									"    var lastname_res  = jsonData.user.lastName;",
+									"    ",
+									"    var uname = pm.globals.get(\"username\");",
+									"    var fname = pm.globals.get(\"firstName\");",
+									"    var lname = pm.globals.get(\"lastName\");",
+									"    ",
+									"    result= (username_res === uname) && (firstname_res === fname) && (lastname_res === lname) ;",
+									"    ",
+									"    pm.expect(result).to.eql(true);",
+									"    ",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"password\": \"{{password}}\",\r\n  \"username\": \"{{username}}\"\r\n}"
+						},
+						"url": {
+							"raw": "{{host}}/trainingapp/user/login",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"trainingapp",
+								"user",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "save-movie Copy",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "775daf4d-6c13-4b14-a42f-029a451d4131",
+								"exec": [
+									"pm.globals.set(\"movieId\", data.MOVIEID);",
+									"pm.globals.set(\"postCode1\", data.POSTCODE1);",
+									"pm.globals.set(\"state1\",data.STATE1);",
+									"pm.globals.set(\"theaterName1\",data.CINEMA1);",
+									"pm.globals.set(\"postCode2\", data.POSTCODE2);",
+									"pm.globals.set(\"state2\",data.STATE2);",
+									"pm.globals.set(\"theaterName2\",data.CINEMA2);",
+									"pm.globals.set(\"title\",data.TITLE);",
+									"pm.globals.set(\"year\",data.YEAR);",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "6d9ace36-3ad9-4c64-bf8f-f8a1ab3635f6",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									" var jsonData = pm.response.json();",
+									" var movieId = jsonData.movieId;",
+									" var title   = jsonData.title;",
+									" var year    = jsonData.year;",
+									" ",
+									" console.log(\"INF: Movie Id = \"+movieId+\" | Title = \"+title+\" | Year = \"+year);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{auth_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \r\n  \"movieId\": {{movieId}},\r\n  \"onTheaters\": [\r\n    {\r\n      \"postCode\": {{postCode1}},\r\n      \"state\": \"{{state1}}\",\r\n      \"theaterName\": \"{{theaterName1}}\"\r\n    }\r\n  ],\r\n  \"title\": \"{{title}}\",\r\n  \"year\": {{year}}\r\n}"
+						},
+						"url": {
+							"raw": "{{host}}/trainingapp/movie",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"trainingapp",
+								"movie"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get-movies-all Copy",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{auth_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{host}}/trainingapp/movie",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"trainingapp",
+								"movie"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "3-del-movie_csv",
+			"item": []
+		}
+	]
+}

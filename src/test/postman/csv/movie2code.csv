@@ -1,0 +1,8 @@
+USERNAME,PASSWORD,MOVIEID,POSTCODE1,STATE1,CINEMA1,POSTCODE2,STATE2,CINEMA2,TITLE,YEAR
+peter.parker@spidersense.com,mjane,8,2000,NSW,Hoyts,2012,NT,Event Cinemas,Spiderman Homecoming,2018
+tony.stark@starkcorp.com,ppotts,9,1832,QLD,Hoyts,2012,NSW,Event Cinemas,Spiderman,2017
+peter.parker@spidersense.com,mjane,10,2154,SA,Alpha,2012,QLD,Hoyts,Amazing Spiderman,2016
+tony.stark@starkcorp.com,ppotts,11,2153,TAS,IMAX,2012,SA,Alpha,Thor,2015
+peter.parker@spidersense.com,mjane,12,2011,VIC,Grand Cinemas,2000,WA,Hoyts,Avengers,2016
+tony.stark@starkcorp.com,ppotts,13,2002,WA,Event Cinemas,2012,VIC,IMAX,Wonder Woman,2017
+peter.parker@spidersense.com,mjane,1,2012,NT,Event Cinemas,2012,TAS,IMAX,Aquaman,2018
